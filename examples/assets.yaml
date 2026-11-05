@@ -1,0 +1,31 @@
+# Example asset inventory.
+#
+# Each glob in "match" is compared with the full scanned artifact name. Matching is case-sensitive
+# and "*" also matches "/". One artifact may match several assets.
+assets:
+  - id: shop-api
+    owner: team-payments
+    criticality: critical
+    environment: prod
+    internet_exposed: true
+    data_classification: confidential
+    match:
+      - "registry.example.com/shop/api:*"
+
+  - id: shop-worker
+    owner: team-payments
+    criticality: high
+    environment: prod
+    internet_exposed: false
+    data_classification: internal
+    match:
+      - "registry.example.com/shop/worker:*"
+
+  # internet_exposed is omitted, which means unknown rather than false.
+  - id: docs-site
+    owner: team-platform
+    criticality: low
+    environment: staging
+    data_classification: public
+    match:
+      - "registry.example.com/docs/*"

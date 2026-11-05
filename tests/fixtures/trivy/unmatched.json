@@ -1,0 +1,21 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "registry.example.com/legacy/tool:0.9",
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "registry.example.com/legacy/tool:0.9 (debian 12.5)",
+      "Class": "os-pkgs",
+      "Type": "debian",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2099-0001",
+          "PkgName": "libexample1",
+          "InstalledVersion": "1.2.3-1",
+          "FixedVersion": "1.2.3-2",
+          "Severity": "CRITICAL"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Bytecode and caches
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Local scan reports and output
+real-report.json
+out.json
+
+# Local tool settings
+.claude/settings.local.json

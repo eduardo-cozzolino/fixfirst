@@ -1,0 +1,18 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "registry.example.com/shop/api:1.4.3",
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "registry.example.com/shop/api:1.4.3 (debian 12.5)",
+      "Class": "os-pkgs",
+      "Type": "debian",
+      "Vulnerabilities": null
+    },
+    {
+      "Target": "app/requirements.txt",
+      "Class": "lang-pkgs",
+      "Type": "pip"
+    }
+  ]
+}

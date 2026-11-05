@@ -1,0 +1,798 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.1"
+  },
+  "ArtifactID": "sha256:0c2972ad9b69a6ba700a6c44d882b518fbaf937fe9eae584ea32b995e9547b8a",
+  "ArtifactName": "python:3.9-slim",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 126453248,
+    "OS": {
+      "Family": "debian",
+      "Name": "13.1"
+    },
+    "ImageID": "sha256:085da638e1b8a449514c3fda83ff50a3bffae4418b050cfacd87e5722071f497",
+    "DiffIDs": [
+      "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c",
+      "sha256:4f237755fbae41472cb9e0f874fa97abb8d684f8fdcc6bd485edc8b6267a9c93",
+      "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea",
+      "sha256:c8f6b54339a8b44071408bd33dd69a9dc7db2ed9cdbf7c533ba09efecda5f33f"
+    ],
+    "RepoTags": [
+      "python:3.9-slim"
+    ],
+    "RepoDigests": [
+      "python@sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b"
+    ],
+    "Reference": "python:3.9-slim",
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2025-10-31T23:17:23.052787588Z",
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c",
+          "sha256:4f237755fbae41472cb9e0f874fa97abb8d684f8fdcc6bd485edc8b6267a9c93",
+          "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea",
+          "sha256:c8f6b54339a8b44071408bd33dd69a9dc7db2ed9cdbf7c533ba09efecda5f33f"
+        ]
+      }
+    },
+    "Layers": [
+      {
+        "Size": 81039360,
+        "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+        "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+      },
+      {
+        "Size": 4122624,
+        "Digest": "sha256:b3ec39b36ae8c03a3e09854de4ec4aa08381dfed84a9daa075048c2e3df3881d",
+        "DiffID": "sha256:4f237755fbae41472cb9e0f874fa97abb8d684f8fdcc6bd485edc8b6267a9c93"
+      },
+      {
+        "Size": 41286144,
+        "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+        "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+      },
+      {
+        "Size": 5120,
+        "Digest": "sha256:ea56f685404adf81680322f152d2cfec62115b30dda481c2c450078315beb508",
+        "DiffID": "sha256:c8f6b54339a8b44071408bd33dd69a9dc7db2ed9cdbf7c533ba09efecda5f33f"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "python:3.9-slim (debian 13.1)",
+      "Class": "os-pkgs",
+      "Type": "debian",
+      "Packages": [
+        {
+          "ID": "apt@3.0.3",
+          "Name": "apt",
+          "Identifier": {
+            "PURL": "pkg:deb/debian/apt@3.0.3?arch=amd64&distro=debian-13.1",
+            "UID": "11607181e5c9d3dd"
+          },
+          "Version": "3.0.3",
+          "Arch": "amd64",
+          "SrcName": "apt",
+          "SrcVersion": "3.0.3",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "curl",
+            "BSD-3-Clause",
+            "MIT",
+            "GPL-2.0-only"
+          ],
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "adduser@3.152",
+            "base-passwd@3.6.7",
+            "debian-archive-keyring@2025.1",
+            "libapt-pkg7.0@3.0.3",
+            "libc6@2.41-12",
+            "libgcc-s1@14.2.0-19",
+            "libseccomp2@2.6.0-2",
+            "libssl3t64@3.5.1-1+deb13u1",
+            "libstdc++6@14.2.0-19",
+            "libsystemd0@257.8-1~deb13u2",
+            "sqv@1.3.0-3"
+          ],
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "liblzma5@5.8.1-1",
+          "Name": "liblzma5",
+          "Identifier": {
+            "PURL": "pkg:deb/debian/liblzma5@5.8.1-1?arch=amd64&distro=debian-13.1",
+            "UID": "a1aeba0cb1cb2810"
+          },
+          "Version": "5.8.1",
+          "Release": "1",
+          "Arch": "amd64",
+          "SrcName": "xz-utils",
+          "SrcVersion": "5.8.1",
+          "SrcRelease": "1",
+          "Licenses": [
+            "0BSD",
+            "GPL-2.0-or-later",
+            "LGPL-2.1-or-later",
+            "FSFULLR",
+            "GPL-3.0-or-later-WITH-Autoconf-exception-macro",
+            "none",
+            "PD",
+            "permissive-nowarranty",
+            "FSFUL",
+            "noderivs",
+            "PD-debian",
+            "LGPL-2.1-only",
+            "GPL-2.0-only",
+            "GPL-3.0-only"
+          ],
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libc6@2.41-12"
+          ],
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "libudev1@257.8-1~deb13u2",
+          "Name": "libudev1",
+          "Identifier": {
+            "PURL": "pkg:deb/debian/libudev1@257.8-1~deb13u2?arch=amd64&distro=debian-13.1",
+            "UID": "e178852f9582c8a9"
+          },
+          "Version": "257.8",
+          "Release": "1~deb13u2",
+          "Arch": "amd64",
+          "SrcName": "systemd",
+          "SrcVersion": "257.8",
+          "SrcRelease": "1~deb13u2",
+          "Licenses": [
+            "LGPL-2.1-or-later",
+            "CC0-1.0",
+            "GPL-2 with Linux-syscall-note exception",
+            "MIT",
+            "public-domain",
+            "GPL-2.0-or-later",
+            "GPL-2.0-only",
+            "LGPL-2.1-only"
+          ],
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "libc6@2.41-12",
+            "libcap2@1:2.75-10+b1"
+          ],
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "passwd@1:4.17.4-2",
+          "Name": "passwd",
+          "Identifier": {
+            "PURL": "pkg:deb/debian/passwd@4.17.4-2?arch=amd64&distro=debian-13.1&epoch=1",
+            "UID": "2e845022a605458d"
+          },
+          "Version": "4.17.4",
+          "Release": "2",
+          "Epoch": 1,
+          "Arch": "amd64",
+          "SrcName": "shadow",
+          "SrcVersion": "4.17.4",
+          "SrcRelease": "2",
+          "SrcEpoch": 1,
+          "Licenses": [
+            "BSD-3-Clause",
+            "GPL-1.0-only",
+            "GPL-2.0-or-later",
+            "GPL-2.0-only"
+          ],
+          "Repository": {
+            "Class": "official"
+          },
+          "DependsOn": [
+            "base-passwd@3.6.7",
+            "libacl1@2.3.2-2+b1",
+            "libattr1@1:2.5.2-3",
+            "libaudit1@1:4.0.2-2+b2",
+            "libbsd0@0.12.2-2",
+            "libc6@2.41-12",
+            "libcrypt1@1:4.4.38-1",
+            "libpam-modules@1.7.0-5",
+            "libpam0g@1.7.0-5",
+            "libselinux1@3.8.1-1",
+            "libsemanage2@3.8.1-1",
+            "login.defs@1:4.17.4-2"
+          ],
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "AnalyzedBy": "dpkg"
+        },
+        {
+          "ID": "perl-base@5.40.1-6",
+          "Name": "perl-base",
+          "Identifier": {
+            "PURL": "pkg:deb/debian/perl-base@5.40.1-6?arch=amd64&distro=debian-13.1",
+            "UID": "546ba1bdcd66d61"
+          },
+          "Version": "5.40.1",
+          "Release": "6",
+          "Arch": "amd64",
+          "SrcName": "perl",
+          "SrcVersion": "5.40.1",
+          "SrcRelease": "6",
+          "Licenses": [
+            "GPL-1.0-or-later",
+            "Artistic-2.0",
+            "MIT",
+            "REGCOMP",
+            "GPL-2.0-with-bison-exception+",
+            "Unicode",
+            "BZIP",
+            "Zlib",
+            "GPL-2.0-or-later",
+            "FSFAP",
+            "BSD-3-clause-with-weird-numbering",
+            "CC0-1.0",
+            "TEXT-TABS",
+            "BSD-4-clause-POWERDOG",
+            "BSD-3-clause-GENERIC",
+            "BSD-3-Clause",
+            "SDBM-PUBLIC-DOMAIN",
+            "DONT-CHANGE-THE-GPL",
+            "Artistic-dist",
+            "LGPL-2.1-only",
+            "GPL-1.0-only",
+            "GPL-2.0-only",
+            "Artistic-2"
+          ],
+          "Repository": {
+            "Class": "official"
+          },
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "AnalyzedBy": "dpkg"
+        }
+      ],
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-109518",
+          "VendorIDs": [
+            "DSA-6607-1"
+          ],
+          "PkgID": "apt@3.0.3",
+          "PkgName": "apt",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/apt@3.0.3?arch=amd64&distro=debian-13.1",
+            "UID": "11607181e5c9d3dd"
+          },
+          "InstalledVersion": "3.0.3",
+          "FixedVersion": "3.0.4",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-109518",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:5079ce8c14492674795aacf773f1de7f570982a9f1e61d992b3e09e0be1c5181",
+          "Title": "On Debian, Ubuntu, and derivative Linux distributions, an on-path atta ...",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-62",
+            "CWE-367"
+          ],
+          "VendorSeverity": {
+            "ubuntu": 3
+          },
+          "PublishedDate": "2026-11-04T16:17:33.01Z",
+          "LastModifiedDate": "2026-11-05T05:18:19.033Z"
+        },
+        {
+          "VulnerabilityID": "DSA-6549-1",
+          "VendorIDs": [
+            "DSA-6549-1"
+          ],
+          "PkgID": "liblzma5@5.8.1-1",
+          "PkgName": "liblzma5",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/liblzma5@5.8.1-1?arch=amd64&distro=debian-13.1",
+            "UID": "a1aeba0cb1cb2810"
+          },
+          "InstalledVersion": "5.8.1-1",
+          "FixedVersion": "5.8.1-1+deb13u2",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:b56b65a9ffd4bc1c085cc8b9aae30c2de57dbc091adb935e2e8d214e0e2c66a4",
+          "Title": "xz-utils - security update",
+          "Severity": "UNKNOWN"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-15059",
+          "PkgID": "libudev1@257.8-1~deb13u2",
+          "PkgName": "libudev1",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/libudev1@257.8-1~deb13u2?arch=amd64&distro=debian-13.1",
+            "UID": "e178852f9582c8a9"
+          },
+          "InstalledVersion": "257.8-1~deb13u2",
+          "Status": "affected",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-15059",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:729b23340489f102dcb4a3e386e7d6855ce3351b595f66825e6c079b81ed86e6",
+          "Title": "systemd: systemd-oomd: Unprivileged users can terminate arbitrary processes via IPC API",
+          "Severity": "MEDIUM",
+          "CweIDs": [
+            "CWE-22",
+            "CWE-59"
+          ],
+          "VendorSeverity": {
+            "azure": 2,
+            "redhat": 2,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 5.5
+            }
+          },
+          "PublishedDate": "2026-08-10T14:17:20.76Z",
+          "LastModifiedDate": "2026-10-23T20:10:00.16Z"
+        },
+        {
+          "VulnerabilityID": "TEMP-0628843-DBAD28",
+          "PkgID": "passwd@1:4.17.4-2",
+          "PkgName": "passwd",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/passwd@4.17.4-2?arch=amd64&distro=debian-13.1&epoch=1",
+            "UID": "2e845022a605458d"
+          },
+          "InstalledVersion": "1:4.17.4-2",
+          "Status": "affected",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "SeveritySource": "debian",
+          "PrimaryURL": "https://security-tracker.debian.org/tracker/TEMP-0628843-DBAD28",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:17f5be20ddf4b792e4f973d4bad2417f75088cb48a6e16559bcb27862bbea581",
+          "Title": "[more related to CVE-2005-4890]",
+          "Severity": "LOW",
+          "VendorSeverity": {
+            "debian": 1
+          }
+        },
+        {
+          "VulnerabilityID": "CVE-2026-8376",
+          "PkgID": "perl-base@5.40.1-6",
+          "PkgName": "perl-base",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/perl-base@5.40.1-6?arch=amd64&distro=debian-13.1",
+            "UID": "546ba1bdcd66d61"
+          },
+          "InstalledVersion": "5.40.1-6",
+          "FixedVersion": "5.40.1-6+deb13u1",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "SeveritySource": "nvd",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-8376",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:7b4d0f24b9c1b56df7460256d1013bf5f1651c1615eef6c1832176f9e56e2cc8",
+          "Title": "perl: Perl: Heap buffer overflow when compiling regular expressions on 32-bit builds",
+          "Severity": "CRITICAL",
+          "CweIDs": [
+            "CWE-680"
+          ],
+          "VendorSeverity": {
+            "amazon": 2,
+            "azure": 2,
+            "nvd": 4,
+            "photon": 4,
+            "redhat": 2,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 9.8
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
+              "V3Score": 5.7
+            }
+          },
+          "PublishedDate": "2026-05-26T00:16:57.15Z",
+          "LastModifiedDate": "2026-09-08T22:19:18.373Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-9538",
+          "PkgID": "perl-base@5.40.1-6",
+          "PkgName": "perl-base",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/perl-base@5.40.1-6?arch=amd64&distro=debian-13.1",
+            "UID": "546ba1bdcd66d61"
+          },
+          "InstalledVersion": "5.40.1-6",
+          "Status": "fix_deferred",
+          "Layer": {
+            "Digest": "sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d",
+            "DiffID": "sha256:d7c97cb6f1fe7cae982649e9f55efe201212e8acaa64bd668c083b204e4efd4c"
+          },
+          "SeveritySource": "nvd",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-9538",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Fingerprint": "sha256:a86786416784146ec0be134ed8bb3bf182b4a862c02c1605b636a6f434ec8061",
+          "Title": "perl-Archive-Tar: perl-Archive-Tar: Denial of Service via crafted tar header with large entry size",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-789"
+          ],
+          "VendorSeverity": {
+            "alma": 3,
+            "amazon": 3,
+            "nvd": 3,
+            "oracle-oval": 3,
+            "redhat": 3,
+            "rocky": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "PublishedDate": "2026-05-26T02:16:41.15Z",
+          "LastModifiedDate": "2026-07-23T11:10:00.12Z"
+        }
+      ]
+    },
+    {
+      "Target": "Python",
+      "Class": "lang-pkgs",
+      "Type": "python-pkg",
+      "Packages": [
+        {
+          "Name": "jaraco.context",
+          "Identifier": {
+            "PURL": "pkg:pypi/jaraco.context@5.3.0",
+            "UID": "aa81d105847d066f"
+          },
+          "Version": "5.3.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "FilePath": "usr/local/lib/python3.9/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/METADATA",
+          "AnalyzedBy": "python-pkg"
+        },
+        {
+          "Name": "setuptools",
+          "Identifier": {
+            "PURL": "pkg:pypi/setuptools@79.0.1",
+            "UID": "758756fc1bf6904f"
+          },
+          "Version": "79.0.1",
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "FilePath": "usr/local/lib/python3.9/site-packages/setuptools-79.0.1.dist-info/METADATA",
+          "AnalyzedBy": "python-pkg"
+        },
+        {
+          "Name": "wheel",
+          "Identifier": {
+            "PURL": "pkg:pypi/wheel@0.45.1",
+            "UID": "96d995da9534681f"
+          },
+          "Version": "0.45.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "FilePath": "usr/local/lib/python3.9/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/METADATA",
+          "AnalyzedBy": "python-pkg"
+        },
+        {
+          "Name": "wheel",
+          "Identifier": {
+            "PURL": "pkg:pypi/wheel@0.45.1",
+            "UID": "1690f317706b4370"
+          },
+          "Version": "0.45.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "FilePath": "usr/local/lib/python3.9/site-packages/wheel-0.45.1.dist-info/METADATA",
+          "AnalyzedBy": "python-pkg"
+        }
+      ],
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-23949",
+          "VendorIDs": [
+            "GHSA-58pv-8j8x-9vj2"
+          ],
+          "PkgName": "jaraco.context",
+          "PkgPath": "usr/local/lib/python3.9/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/jaraco.context@5.3.0",
+            "UID": "aa81d105847d066f"
+          },
+          "InstalledVersion": "5.3.0",
+          "FixedVersion": "6.1.0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-23949",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Fingerprint": "sha256:309ddcddeb5f1ef1207d2d11b67cf527caa417f1d34efbfb3be35742a765e230",
+          "Title": "jaraco.context: jaraco.context: Path traversal via malicious tar archives",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "redhat": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+              "V3Score": 8.6
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+              "V3Score": 8.6
+            }
+          },
+          "PublishedDate": "2026-01-20T01:15:57.723Z",
+          "LastModifiedDate": "2026-06-17T10:22:20.2Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-xmj3-9gf7-h52w",
+          "PkgName": "setuptools",
+          "PkgPath": "usr/local/lib/python3.9/site-packages/setuptools-79.0.1.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/setuptools@79.0.1",
+            "UID": "758756fc1bf6904f"
+          },
+          "InstalledVersion": "79.0.1",
+          "FixedVersion": "84.1.0",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-xmj3-9gf7-h52w",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Fingerprint": "sha256:3634166ae2869e3b44ddc8d61f60addb4bb8922c29bf12c3bb2b76d188d1013e",
+          "Title": "setuptools: Windows path escape via namespace_packages.txt during legacy wheel installation  Description",
+          "Severity": "LOW",
+          "VendorSeverity": {
+            "ghsa": 1
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:A/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N",
+              "V40Score": 1
+            }
+          },
+          "PublishedDate": "2026-10-23T21:44:11Z",
+          "LastModifiedDate": "2026-10-23T21:44:11Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-24049",
+          "VendorIDs": [
+            "GHSA-8rrh-rw8j-w5fx"
+          ],
+          "PkgName": "wheel",
+          "PkgPath": "usr/local/lib/python3.9/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/wheel@0.45.1",
+            "UID": "96d995da9534681f"
+          },
+          "InstalledVersion": "0.45.1",
+          "FixedVersion": "0.46.2",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24049",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Fingerprint": "sha256:54a9a51fad3aa031f52079f72883242d0694ba11b5ebfd60f8156d88d583090c",
+          "Title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22",
+            "CWE-732"
+          ],
+          "VendorSeverity": {
+            "alma": 3,
+            "amazon": 3,
+            "azure": 2,
+            "cbl-mariner": 2,
+            "ghsa": 3,
+            "nvd": 2,
+            "oracle-oval": 3,
+            "redhat": 3,
+            "rocky": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+              "V3Score": 7.1
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+              "V3Score": 5.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+              "V3Score": 7.1
+            }
+          },
+          "PublishedDate": "2026-01-22T05:16:23.157Z",
+          "LastModifiedDate": "2026-09-10T13:17:45.017Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-24049",
+          "VendorIDs": [
+            "GHSA-8rrh-rw8j-w5fx"
+          ],
+          "PkgName": "wheel",
+          "PkgPath": "usr/local/lib/python3.9/site-packages/wheel-0.45.1.dist-info/METADATA",
+          "PkgIdentifier": {
+            "PURL": "pkg:pypi/wheel@0.45.1",
+            "UID": "1690f317706b4370"
+          },
+          "InstalledVersion": "0.45.1",
+          "FixedVersion": "0.46.2",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08",
+            "DiffID": "sha256:298992e09a0315a8f26375a553f216f5fad3decf392956fd2de5ef7aa1f8dfea"
+          },
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24049",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory pip",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Apip"
+          },
+          "Fingerprint": "sha256:54a9a51fad3aa031f52079f72883242d0694ba11b5ebfd60f8156d88d583090c",
+          "Title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22",
+            "CWE-732"
+          ],
+          "VendorSeverity": {
+            "alma": 3,
+            "amazon": 3,
+            "azure": 2,
+            "cbl-mariner": 2,
+            "ghsa": 3,
+            "nvd": 2,
+            "oracle-oval": 3,
+            "redhat": 3,
+            "rocky": 3,
+            "ubuntu": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+              "V3Score": 7.1
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+              "V3Score": 5.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+              "V3Score": 7.1
+            }
+          },
+          "PublishedDate": "2026-01-22T05:16:23.157Z",
+          "LastModifiedDate": "2026-09-10T13:17:45.017Z"
+        }
+      ]
+    }
+  ]
+}

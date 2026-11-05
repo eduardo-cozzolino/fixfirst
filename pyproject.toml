@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fixfirst"
+version = "0.1.0"
+description = "Exposure-aware vulnerability triage."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Eduardo Cozzolino" }]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Typing :: Typed",
+]
+dependencies = ["pydantic>=2", "pyyaml"]
+
+[project.optional-dependencies]
+dev = ["mypy", "pytest", "ruff", "types-PyYAML"]
+
+[project.scripts]
+fixfirst = "fixfirst.cli:main"
+
+[project.urls]
+Repository = "https://github.com/eduardo-cozzolino/fixfirst"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fixfirst"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --import-mode=importlib"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "RUF", "ANN"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]

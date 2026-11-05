@@ -1,0 +1,5 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "registry.example.com/shop/worker:2.1.0",
+  "ArtifactType": "container_image"
+}
