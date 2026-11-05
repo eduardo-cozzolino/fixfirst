@@ -107,12 +107,16 @@ def test_wrong_inventory_shape_is_an_input_error(tmp_path: Path, content: str) -
         load_assets(write_inventory(tmp_path, content))
 
 
-def test_duplicate_asset_ids_are_rejected(tmp_path: Path) -> None:
+def test_duplicate_asset_id_is_reported_by_position_without_its_value(tmp_path: Path) -> None:
     item = VALID_ASSET.removeprefix("assets:\n")
-    path = write_inventory(tmp_path, f"assets:\n{item}{item}")
+    duplicated = item.replace("id: a", "id: SENTINEL")
+    other = item.replace("id: a", "id: other")
+    path = write_inventory(tmp_path, f"assets:\n{duplicated}{other}{duplicated}")
 
-    with pytest.raises(InputError, match="duplicate asset id: a"):
+    with pytest.raises(InputError, match=r"assets\.2\.id: duplicate asset id") as excinfo:
         load_assets(path)
+
+    assert "SENTINEL" not in str(excinfo.value)
 
 
 def test_invalid_yaml_is_an_input_error(tmp_path: Path) -> None:

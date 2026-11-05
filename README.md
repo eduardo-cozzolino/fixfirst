@@ -7,6 +7,31 @@ in an inventory file and removes duplicates, as the basis for deciding what to f
 deduplication and a summary. It makes no network calls. See
 [docs/decisions/0001-foundation.md](docs/decisions/0001-foundation.md) for the design and scope.
 
+## Example
+
+Text summary from a real scan with Trivy 0.76.1. Counts change as the vulnerability database updates.
+
+```console
+trivy image --format json -o report.json python:3.9-slim
+fixfirst ingest report.json --assets examples/assets.yaml
+```
+
+```text
+Findings by severity:
+  CRITICAL  6
+  HIGH      125
+  MEDIUM    193
+  LOW       158
+  UNKNOWN   9
+Unique findings:      491
+Assets affected:      0
+Unassigned artifacts: 1
+  python:3.9-slim
+```
+
+The artifact is listed as unassigned because no glob in `examples/assets.yaml` matches
+`python:3.9-slim`; its findings are still reported, just not attributed to any asset.
+
 ## Usage
 
 Requires Python 3.12 or newer.
@@ -25,6 +50,7 @@ Exit codes: `0` for a successful run, whatever the findings are, and `2` for an 
 ```console
 pip install -e ".[dev]"
 ruff check .
+ruff format --check .
 mypy --strict src
 pytest
 ```

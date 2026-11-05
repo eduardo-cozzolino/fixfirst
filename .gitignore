@@ -20,7 +20,11 @@ htmlcov/
 
 # Local scan reports and output
 real-report.json
+report.json
 out.json
+
+# Git bundles
+*.bundle
 
 # Local tool settings
 .claude/settings.local.json

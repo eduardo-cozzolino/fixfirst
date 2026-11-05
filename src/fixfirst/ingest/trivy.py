@@ -97,9 +97,7 @@ def parse_report(path: Path, max_bytes: int = MAX_REPORT_BYTES) -> ParsedReport:
     try:
         report = _TrivyReport.model_validate(data)
     except ValidationError as exc:
-        raise InputError(
-            f"{path}: invalid Trivy report: {describe_validation_error(exc)}"
-        ) from exc
+        raise InputError(f"{path}: invalid Trivy report: {describe_validation_error(exc)}") from exc
 
     entries = [
         (result.type, vulnerability)

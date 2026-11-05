@@ -3,10 +3,9 @@
 from collections.abc import Iterable, Sequence
 from fnmatch import fnmatchcase
 from pathlib import Path
-from typing import Self
 
 import yaml
-from pydantic import BaseModel, ConfigDict, ValidationError, model_validator
+from pydantic import BaseModel, ConfigDict, ValidationError
 
 from fixfirst._input import describe_validation_error, read_limited
 from fixfirst.errors import InputError
@@ -19,15 +18,6 @@ class _Inventory(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     assets: list[Asset]
-
-    @model_validator(mode="after")
-    def _check_unique_ids(self) -> Self:
-        seen: set[str] = set()
-        for asset in self.assets:
-            if asset.id in seen:
-                raise ValueError(f"duplicate asset id: {asset.id}")
-            seen.add(asset.id)
-        return self
 
 
 def load_assets(path: Path, max_bytes: int = MAX_INVENTORY_BYTES) -> list[Asset]:
@@ -48,9 +38,20 @@ def load_assets(path: Path, max_bytes: int = MAX_INVENTORY_BYTES) -> list[Asset]
         raise InputError(f"{path}: invalid YAML (nested too deeply)") from exc
 
     try:
-        return _Inventory.model_validate(data).assets
+        assets = _Inventory.model_validate(data).assets
     except ValidationError as exc:
         raise InputError(f"{path}: invalid inventory: {describe_validation_error(exc)}") from exc
+    _check_unique_ids(path, assets)
+    return assets
+
+
+def _check_unique_ids(path: Path, assets: Iterable[Asset]) -> None:
+    seen: set[str] = set()
+    for position, asset in enumerate(assets):
+        if asset.id in seen:
+            # Errors name the position, in the format of validation errors, and not the value.
+            raise InputError(f"{path}: invalid inventory: assets.{position}.id: duplicate asset id")
+        seen.add(asset.id)
 
 
 def match_assets(artifact_name: str, assets: Iterable[Asset]) -> set[str]:

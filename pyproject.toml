@@ -15,13 +15,14 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Security",
     "Typing :: Typed",
 ]
-dependencies = ["pydantic>=2", "pyyaml"]
+dependencies = ["pydantic>=2.13", "pyyaml"]
 
 [project.optional-dependencies]
-dev = ["mypy", "pytest", "ruff", "types-PyYAML"]
+dev = ["mypy==2.4.1", "pytest==9.2.0", "ruff==0.17.3", "types-PyYAML==6.0.12.20261103"]
 
 [project.scripts]
 fixfirst = "fixfirst.cli:main"
