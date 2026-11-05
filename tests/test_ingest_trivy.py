@@ -6,7 +6,7 @@ import pytest
 
 from fixfirst.errors import InputError
 from fixfirst.ingest.trivy import parse_report
-from fixfirst.models import Finding, FixStatus, Severity
+from fixfirst.models import CvssScore, CvssVersion, Finding, FixStatus, Severity
 
 FIXTURES = Path(__file__).parent / "fixtures" / "trivy"
 # Trimmed from a Trivy 0.76.1 scan of python:3.9-slim. The other fixtures are hand-written.
@@ -251,6 +251,113 @@ def test_omitted_fix_status_and_pkg_path_get_their_defaults(tmp_path: Path) -> N
 @pytest.mark.parametrize("path", [None, ""])
 def test_null_or_empty_pkg_path_gives_no_paths(tmp_path: Path, path: str | None) -> None:
     assert parse_single(tmp_path, PkgPath=path).pkg_paths == set()
+
+
+def test_cvss_prefers_nvd_v3(tmp_path: Path) -> None:
+    cvss = {"redhat": {"V3Score": 6.8}, "nvd": {"V3Score": 5.3}, "alma": {"V3Score": 9.9}}
+
+    finding = parse_single(tmp_path, CVSS=cvss, SeveritySource="redhat")
+
+    assert finding.cvss == CvssScore(score=5.3, version=CvssVersion.V3, source="nvd")
+
+
+def test_cvss_uses_the_severity_source_vendor_without_nvd(tmp_path: Path) -> None:
+    cvss = {"alma": {"V3Score": 9.9}, "redhat": {"V3Score": 6.8}}
+
+    finding = parse_single(tmp_path, CVSS=cvss, SeveritySource="redhat")
+
+    assert finding.cvss == CvssScore(score=6.8, version=CvssVersion.V3, source="redhat")
+
+
+def test_cvss_falls_back_to_vendors_alphabetically(tmp_path: Path) -> None:
+    cvss = {"redhat": {"V3Score": 6.8}, "julia": {"V3Score": 5.3}, "bitnami": {"V3Score": 7.5}}
+
+    finding = parse_single(tmp_path, CVSS=cvss, SeveritySource="ghsa")
+
+    assert finding.cvss == CvssScore(score=7.5, version=CvssVersion.V3, source="bitnami")
+
+
+def test_cvss_v3_from_a_vendor_beats_older_or_newer_versions_from_nvd(tmp_path: Path) -> None:
+    cvss = {"nvd": {"V2Score": 9.0, "V40Score": 8.0}, "redhat": {"V3Score": 6.8}}
+
+    assert parse_single(tmp_path, CVSS=cvss).cvss == CvssScore(
+        score=6.8, version=CvssVersion.V3, source="redhat"
+    )
+
+
+def test_cvss_falls_back_to_v40_and_then_v2(tmp_path: Path) -> None:
+    assert parse_single(tmp_path, CVSS={"nvd": {"V40Score": 8.0, "V2Score": 9.0}}).cvss == (
+        CvssScore(score=8.0, version=CvssVersion.V40, source="nvd")
+    )
+    assert parse_single(tmp_path, CVSS={"redhat": {"V2Score": 9.0}}).cvss == CvssScore(
+        score=9.0, version=CvssVersion.V2, source="redhat"
+    )
+
+
+@pytest.mark.parametrize("score", [7, 0, 10])
+def test_cvss_accepts_integer_scores_as_trivy_writes_them(tmp_path: Path, score: int) -> None:
+    finding = parse_single(tmp_path, CVSS={"nvd": {"V3Score": score}})
+
+    assert finding.cvss == CvssScore(score=float(score), version=CvssVersion.V3, source="nvd")
+
+
+@pytest.mark.parametrize(
+    "cvss",
+    [None, {}, {"nvd": {}}, {"nvd": {"V3Vector": "CVSS:3.1/AV:N"}}, {"nvd": {"V3Score": None}}],
+)
+def test_no_usable_cvss_is_none(tmp_path: Path, cvss: dict[str, object] | None) -> None:
+    assert parse_single(tmp_path, CVSS=cvss).cvss is None
+
+
+def test_omitted_cvss_is_none(tmp_path: Path) -> None:
+    assert parse_single(tmp_path).cvss is None
+
+
+@pytest.mark.parametrize(
+    "cvss",
+    [
+        pytest.param({"nvd": {"V3Score": 10.1}}, id="above-ten"),
+        pytest.param({"nvd": {"V3Score": -1}}, id="negative"),
+        pytest.param({"nvd": {"V3Score": "9.8"}}, id="string"),
+        pytest.param({"nvd": {"V3Score": True}}, id="boolean"),
+        pytest.param({"nvd": 9.8}, id="entry-not-an-object"),
+        pytest.param({"": {"V3Score": 9.8}}, id="empty-source"),
+        pytest.param([], id="not-an-object"),
+    ],
+)
+def test_invalid_cvss_rejects_the_report(tmp_path: Path, cvss: object) -> None:
+    path = write_report(tmp_path, valid_vulnerability(CVSS=cvss))
+
+    with pytest.raises(InputError, match="invalid Trivy report"):
+        parse_report(path)
+
+
+@pytest.mark.parametrize(
+    ("vuln_id", "expected"),
+    [
+        pytest.param(
+            "CVE-2026-8376",
+            CvssScore(score=9.8, version=CvssVersion.V3, source="nvd"),
+            id="nvd",
+        ),
+        pytest.param(
+            "CVE-2026-15059",
+            CvssScore(score=5.5, version=CvssVersion.V3, source="redhat"),
+            id="vendor-without-nvd",
+        ),
+        pytest.param(
+            "GHSA-xmj3-9gf7-h52w",
+            CvssScore(score=1.0, version=CvssVersion.V40, source="ghsa"),
+            id="only-v40",
+        ),
+        pytest.param("CVE-2026-109518", None, id="no-cvss-field"),
+        pytest.param("DSA-6549-1", None, id="advisory-without-cvss"),
+    ],
+)
+def test_real_report_cvss(vuln_id: str, expected: CvssScore | None) -> None:
+    finding = next(f for f in parse_report(REAL_REPORT).findings if f.vuln_id == vuln_id)
+
+    assert finding.cvss == expected
 
 
 def test_normal_report_is_normalized() -> None:

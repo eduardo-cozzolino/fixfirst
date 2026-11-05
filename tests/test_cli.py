@@ -241,6 +241,7 @@ def test_json_output_has_normalized_findings(capsys: pytest.CaptureFixture[str])
         "fixed_versions": ["1.2.3-2", "1.2.3-3"],
         "fix_status": ["unknown"],
         "scanner_severity": "CRITICAL",
+        "cvss": None,
         "title": "libexample: title seen in image a",
         "primary_url": "https://vuln.example.com/CVE-2099-0001",
         "asset_ids": ["shop-api", "shop-worker"],

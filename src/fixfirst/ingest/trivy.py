@@ -9,21 +9,51 @@ the value is recorded for a warning, so a new Trivy status does not block a whol
 """
 
 import json
+from collections.abc import Mapping
 from pathlib import Path
-from typing import NoReturn
+from typing import Annotated, NoReturn
 from urllib.parse import urlsplit
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
 
 from fixfirst._input import describe_validation_error, read_limited
 from fixfirst.errors import InputError
-from fixfirst.models import Finding, FixStatus, NonEmptyStr, ParsedReport, Severity
+from fixfirst.models import (
+    CvssScore,
+    CvssVersion,
+    Finding,
+    FixStatus,
+    NonEmptyStr,
+    ParsedReport,
+    Severity,
+)
 
 MAX_REPORT_BYTES = 100 * 1024 * 1024
 SOURCE = "trivy"
 
 _UNKNOWN_ECOSYSTEM = "unknown"
 _ALLOWED_URL_SCHEMES = frozenset({"http", "https"})
+_PREFERRED_CVSS_SOURCE = "nvd"
+
+# Trivy writes whole scores as integers, such as 7 rather than 7.0.
+_CvssNumber = Annotated[int, Field(ge=0, le=10)] | Annotated[float, Field(ge=0, le=10)]
+
+
+class _TrivyCvssEntry(BaseModel):
+    model_config = ConfigDict(extra="ignore", strict=True, frozen=True)
+
+    v3_score: _CvssNumber | None = Field(default=None, alias="V3Score")
+    v40_score: _CvssNumber | None = Field(default=None, alias="V40Score")
+    v2_score: _CvssNumber | None = Field(default=None, alias="V2Score")
+
+    def score_for(self, version: CvssVersion) -> float | None:
+        """Return the score of the given CVSS version, if there is one."""
+        score = {
+            CvssVersion.V3: self.v3_score,
+            CvssVersion.V40: self.v40_score,
+            CvssVersion.V2: self.v2_score,
+        }[version]
+        return None if score is None else float(score)
 
 
 class _TrivyVulnerability(BaseModel):
@@ -38,6 +68,8 @@ class _TrivyVulnerability(BaseModel):
     fixed_version: str | None = Field(default=None, alias="FixedVersion")
     status: str | None = Field(default=None, alias="Status")
     severity: Severity = Field(default=Severity.UNKNOWN, alias="Severity")
+    severity_source: str | None = Field(default=None, alias="SeveritySource")
+    cvss: dict[NonEmptyStr, _TrivyCvssEntry] | None = Field(default=None, alias="CVSS")
     title: str | None = Field(default=None, alias="Title")
     primary_url: str | None = Field(default=None, alias="PrimaryURL")
 
@@ -145,12 +177,31 @@ def _to_finding(vulnerability: _TrivyVulnerability, result_type: str, artifact: 
         fixed_versions=_split_fixed_versions(vulnerability.fixed_version),
         fix_status={_parse_fix_status(vulnerability.status) or FixStatus.UNKNOWN},
         scanner_severity=vulnerability.severity,
+        cvss=_select_cvss(vulnerability.cvss or {}, vulnerability.severity_source),
         title=vulnerability.title or None,
         primary_url=_safe_url(vulnerability.primary_url),
         artifacts={artifact},
         pkg_paths={vulnerability.pkg_path} if vulnerability.pkg_path else set(),
         source=SOURCE,
     )
+
+
+def _select_cvss(
+    entries: Mapping[str, _TrivyCvssEntry], severity_source: str | None
+) -> CvssScore | None:
+    """Pick one score: V3 before V4.0 before V2, and nvd before the vendor Trivy took severity from.
+
+    Remaining vendors follow alphabetically, so the choice does not depend on report order.
+    """
+    preferred = [_PREFERRED_CVSS_SOURCE, *([severity_source] if severity_source else [])]
+    sources = [source for source in dict.fromkeys(preferred) if source in entries]
+    sources += sorted(source for source in entries if source not in sources)
+    for version in (CvssVersion.V3, CvssVersion.V40, CvssVersion.V2):
+        for source in sources:
+            score = entries[source].score_for(version)
+            if score is not None:
+                return CvssScore(score=score, version=version, source=source)
+    return None
 
 
 def _split_fixed_versions(value: str | None) -> list[str]:

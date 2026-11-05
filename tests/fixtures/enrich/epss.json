@@ -1,0 +1,23 @@
+{
+  "status": "OK",
+  "status-code": 200,
+  "version": "1.0",
+  "access": "public",
+  "total": 2,
+  "offset": 0,
+  "limit": 100,
+  "data": [
+    {
+      "cve": "CVE-2099-2001",
+      "epss": "0.500000000",
+      "percentile": "0.980000000",
+      "date": "2099-01-15"
+    },
+    {
+      "cve": "CVE-2099-2002",
+      "epss": "0.005400000",
+      "percentile": "0.455570000",
+      "date": "2099-01-15"
+    }
+  ]
+}

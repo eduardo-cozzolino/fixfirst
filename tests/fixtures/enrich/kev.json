@@ -1,0 +1,35 @@
+{
+  "title": "Synthetic test catalog with the field names of the CISA KEV feed",
+  "catalogVersion": "2099.01.15",
+  "dateReleased": "2099-01-15T20:00:05.774Z",
+  "count": 2,
+  "vulnerabilities": [
+    {
+      "cveID": "CVE-2099-1001",
+      "vendorProject": "Example",
+      "product": "Example Product",
+      "vulnerabilityName": "Synthetic entry",
+      "dateAdded": "2099-01-15",
+      "shortDescription": "Synthetic entry used only in tests.",
+      "requiredAction": "None.",
+      "dueDate": "2099-02-05",
+      "knownRansomwareCampaignUse": "Unknown",
+      "forensicTriage": "No",
+      "notes": "",
+      "cwes": ["CWE-287"]
+    },
+    {
+      "cveID": "CVE-2099-1002",
+      "vendorProject": "Example",
+      "product": "Example Product",
+      "vulnerabilityName": "Synthetic entry",
+      "dateAdded": "2099-01-10",
+      "shortDescription": "Synthetic entry used only in tests.",
+      "requiredAction": "None.",
+      "dueDate": "2099-01-31",
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "",
+      "cwes": []
+    }
+  ]
+}

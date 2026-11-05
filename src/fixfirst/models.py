@@ -1,9 +1,11 @@
 """The data model shared by all fixfirst components."""
 
+from datetime import date
 from enum import StrEnum
 from typing import Annotated
 
 from pydantic import (
+    AwareDatetime,
     BaseModel,
     ConfigDict,
     Field,
@@ -86,6 +88,24 @@ class DataClassification(StrEnum):
     RESTRICTED = "restricted"
 
 
+class CvssVersion(StrEnum):
+    """CVSS version of a score."""
+
+    V2 = "2"
+    V3 = "3"
+    V40 = "4.0"
+
+
+class CvssScore(BaseModel):
+    """A CVSS score and where it came from."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    score: float = Field(ge=0, le=10)
+    version: CvssVersion
+    source: NonEmptyStr
+
+
 class Finding(BaseModel):
     """One vulnerability in one package version, with everything it affects."""
 
@@ -100,6 +120,7 @@ class Finding(BaseModel):
     # A set because the merged copies of a finding can report different statuses.
     fix_status: set[FixStatus] = Field(default_factory=lambda: {FixStatus.UNKNOWN}, min_length=1)
     scanner_severity: Severity
+    cvss: CvssScore | None = None
     title: str | None = None
     primary_url: str | None = None
     asset_ids: set[str] = Field(default_factory=set)
@@ -169,3 +190,96 @@ class IngestResult(BaseModel):
 
     findings: list[Finding]
     unassigned_artifacts: list[str]
+
+
+class KevState(StrEnum):
+    """What the KEV catalog says about a vulnerability id."""
+
+    LISTED = "listed"
+    NOT_LISTED = "not_listed"
+    # The id is not a CVE, so KEV cannot say anything. This never means "not exploited".
+    NOT_APPLICABLE = "not_applicable"
+
+
+class EpssState(StrEnum):
+    """What EPSS says about a vulnerability id."""
+
+    SCORED = "scored"
+    # EPSS has no score for this CVE. This never means a score of zero.
+    NOT_SCORED = "not_scored"
+    # The id is not a CVE, so EPSS cannot say anything. This never means "not exploited".
+    NOT_APPLICABLE = "not_applicable"
+
+
+class EvidenceSource(StrEnum):
+    """Where a piece of evidence came from."""
+
+    CISA_KEV = "cisa_kev"
+    FIRST_EPSS = "first_epss"
+    SCANNER_REPORT = "scanner_report"
+    ASSET_INVENTORY = "asset_inventory"
+
+
+class KevEvidence(BaseModel):
+    """The KEV state of a vulnerability id."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    state: KevState
+    catalog_version: str | None = None
+    date_added: date | None = None
+    due_date: date | None = None
+    stale: bool = False
+
+
+class EpssEvidence(BaseModel):
+    """The EPSS state of a vulnerability id."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    state: EpssState
+    score: float | None = None
+    percentile: float | None = None
+    score_date: date | None = None
+    stale: bool = False
+
+
+class FindingEvidence(BaseModel):
+    """What a scanner report says about a finding."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    severity: Severity
+    fix_status: list[FixStatus]
+    fixed_versions: list[str]
+    cvss: CvssScore | None
+
+
+class AssetEvidence(BaseModel):
+    """What the inventory says about an asset."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    internet_exposed: bool | None
+    criticality: Criticality
+
+
+class UnassignedArtifactEvidence(BaseModel):
+    """An artifact that matches no asset, so its exposure and criticality are unknown."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    artifact: NonEmptyStr
+
+
+class Evidence(BaseModel):
+    """A fact that a priority decision relied on."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    id: NonEmptyStr
+    source: EvidenceSource
+    # None for reports and inventories, which are read rather than retrieved. A timestamp of the run
+    # would add nothing and would make the output differ between identical runs.
+    retrieved_at: AwareDatetime | None
+    data: KevEvidence | EpssEvidence | FindingEvidence | AssetEvidence | UnassignedArtifactEvidence

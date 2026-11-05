@@ -1,7 +1,7 @@
 from itertools import permutations
 
 from fixfirst.dedup import merge_findings
-from fixfirst.models import Finding, FixStatus, Severity
+from fixfirst.models import CvssScore, CvssVersion, Finding, FixStatus, Severity
 
 
 def make_finding(
@@ -100,6 +100,37 @@ def test_new_fields_do_not_split_a_finding() -> None:
     )
 
     assert len(merged) == 1
+
+
+def with_cvss(artifact: str, score: float | None, source: str = "redhat") -> Finding:
+    cvss = None if score is None else CvssScore(score=score, version=CvssVersion.V3, source=source)
+    return make_finding(artifact).model_copy(update={"cvss": cvss})
+
+
+def test_merged_cvss_prefers_nvd_over_a_higher_vendor_score() -> None:
+    merged = merge_findings([with_cvss("a", 9.8), with_cvss("b", 5.3, "nvd")])
+
+    assert merged[0].cvss == CvssScore(score=5.3, version=CvssVersion.V3, source="nvd")
+
+
+def test_merged_cvss_otherwise_takes_the_highest_score() -> None:
+    merged = merge_findings(
+        [with_cvss("a", 5.3), with_cvss("b", 9.8, "ghsa"), with_cvss("c", None)]
+    )
+
+    assert merged[0].cvss == CvssScore(score=9.8, version=CvssVersion.V3, source="ghsa")
+
+
+def test_merged_cvss_is_none_when_no_copy_has_one() -> None:
+    assert merge_findings([with_cvss("a", None), with_cvss("b", None)])[0].cvss is None
+
+
+def test_merged_cvss_is_independent_of_input_order() -> None:
+    findings = [with_cvss("a", 7.0, "ghsa"), with_cvss("b", 7.0, "redhat")]
+
+    results = {merge_findings(order)[0].cvss for order in permutations(findings)}
+
+    assert len(results) == 1
 
 
 def test_same_key_twice_in_one_artifact_is_merged() -> None:
